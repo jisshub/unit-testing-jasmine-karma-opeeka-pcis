@@ -107,6 +107,12 @@ it('should call SetupGridParameters and GenerateHeaders', () => {
 ```ts
  this.dashboardService.getHelperIndex().subscribe((value) => {
       this.helperIndex = value;
+       if (this.helperIndex) {
+        this.helperData = [];
+        this.tableData = [];
+        this.GenerateGrid();
+      }
+ }
 ```
 
 **spec.ts**
@@ -118,10 +124,13 @@ it('should call getHelperIndex and return a value', () => {
   component.ngOnInit();
   fixture.detectChanges();
   expect(component.helperIndex).toEqual(value);
+  expect(component.helperData).toEqual([]);
+  expect(component.tableData).toEqual([]);
+  expect(component.GenerateGrid).toHaveBeenCalled();
 });
 ```
 
-## test unsubscribe method on ngOnDestroy
+## Test unsubscribe method on ngOnDestroy
 
 **component.ts**
 
@@ -142,3 +151,25 @@ it('should call unsubscribe on ngOnDestroy', () => {
   expect(component['helperSubscription'].unsubscribe).toHaveBeenCalledTimes(1);
 });
 ```
+
+## Test whether service called or not.(issue in this test case)
+
+**component.ts**
+
+```ts
+public openModal() {
+    this.modalRef = this.modalService.show(this.elementView, {
+      class: 'modal-dialog-centered',
+    });
+  }
+```
+
+**spec.ts**
+
+```ts
+it('modal service is called', () => {
+  spyOn(service, 'show').and.callThrough();
+});
+```
+
+`
