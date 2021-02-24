@@ -19,6 +19,7 @@ it('should test window open event', () => {
   });
   component.goToLink('test');
   expect(window.open).toHaveBeenCalled();
+  expect(window.open).toHaveBeenCalledWith('test', '_blank');
 });
 ```
 
