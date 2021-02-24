@@ -120,3 +120,25 @@ it('should call getHelperIndex and return a value', () => {
   expect(component.helperIndex).toEqual(value);
 });
 ```
+
+## test unsubscribe method on ngOnDestroy
+
+**component.ts**
+
+```ts
+  ngOnDestroy(): void {
+    if (this.helperSubscription) {
+      this.helperSubscription.unsubscribe();
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should call unsubscribe on ngOnDestroy', () => {
+  spyOn(component['helperSubscription'], 'unsubscribe');
+  component.ngOnDestroy();
+  expect(component['helperSubscription'].unsubscribe).toHaveBeenCalledTimes(1);
+});
+```
