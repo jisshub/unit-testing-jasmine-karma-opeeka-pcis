@@ -21,3 +21,24 @@ it('should test window open event', () => {
   expect(window.open).toHaveBeenCalled();
 });
 ```
+
+## test a component method that invokes another method
+
+**component.ts**
+
+```ts
+add-questionnaire-popup
+  emitClosePopup(e) {
+    this.closePopup();
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should call closePopup on emitClosePopup', () => {
+  spyOn(component, 'closePopup');
+  component.emitClosePopup('test');
+  expect(component.closePopup).toHaveBeenCalled();
+});
+```
