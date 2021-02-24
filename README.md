@@ -43,3 +43,80 @@ it('should call closePopup on emitClosePopup', () => {
   expect(component.closePopup).toHaveBeenCalled();
 });
 ```
+
+## Test whether a property is defined
+
+**component.ts**
+
+```ts
+paginationParams = {
+  pageSize: 20, // no. of items per page
+  currentPage: 1, // current selected page in the grid
+  pageSizes: [3, 5, 10, 50, 500], // dropdown option to show no. of items per page
+  totalRecordCount: 0, // total number of records from the resultset without pagination
+  initialPage: 1, // to set initial page when the grid is loaded initially
+  showPagination: true, // to show/hide the pagination (true/false)
+  showPreviousNext: true, // to show/hide next, first, previous, last buttons
+  showTotal: true, // to show/hide total records text
+  sort_ascending_class: 'sort_ascending', // class for ascending icon in column header
+  sort_descending_class: 'sort_descending', // class for descending icon in column header
+  default_sort_class: 'commonsort', // class for default sorting in column header
+  sortHeader: 'helperName', // default sort key in the column header
+  sortDirection: 'asc', // default sort order in the column header
+  noRecordsText: 'No Records Found', // text to show when the grid contains no result
+  totalRecordsText: 'Total: ', // text to show for the total records label
+  tableSummary: 'Helper Listing', // Summary that needs to be given to table
+  enableRowClick: 'rowClickCallBack', // method to define for row click
+};
+```
+
+**spec.ts**
+
+```ts
+it('should set paginationParams', () => {
+  expect(component.paginationParams).toBeDefined();
+});
+```
+
+## Test a function is called in ngOnInIt
+
+**component.ts**
+
+```ts
+ngOnInit(): void {
+    this.SetupGridParameters(); // setup grid parameters
+    this.GenerateHeaders(); // setup headers
+```
+
+**spec.ts**
+
+```ts
+it('should call SetupGridParameters and GenerateHeaders', () => {
+  spyOn(component, 'SetupGridParameters');
+  spyOn(component, 'GenerateHeaders');
+  component.ngOnInit();
+  expect(component.SetupGridParameters).toHaveBeenCalled();
+  expect(component.GenerateHeaders).toHaveBeenCalled();
+});
+```
+
+## Test subscribe method in ngOnInit()
+
+**component.ts**
+
+```ts
+ this.dashboardService.getHelperIndex().subscribe((value) => {
+      this.helperIndex = value;
+```
+
+**spec.ts**
+
+```ts
+it('should call getHelperIndex and return a value', () => {
+  let value: string;
+  spyOn(service, 'getHelperIndex').and.returnValue(of(value));
+  component.ngOnInit();
+  fixture.detectChanges();
+  expect(component.helperIndex).toEqual(value);
+});
+```
