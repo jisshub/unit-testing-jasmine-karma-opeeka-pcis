@@ -105,6 +105,9 @@ it('should call SetupGridParameters and GenerateHeaders', () => {
 **component.ts**
 
 ```ts
+if (!this.dashboardService.getCurrentHelperIndex()) {
+      this.GenerateGrid();
+    }
  this.dashboardService.getHelperIndex().subscribe((value) => {
       this.helperIndex = value;
        if (this.helperIndex) {
@@ -118,6 +121,12 @@ it('should call SetupGridParameters and GenerateHeaders', () => {
 **spec.ts**
 
 ```ts
+it('should call GenerateGrid on ngOnInit', () => {
+  spyOn(service, 'getCurrentHelperIndex');
+  spyOn(component, 'GenerateGrid');
+  component.ngOnInit();
+  expect(component.GenerateGrid).toHaveBeenCalled();
+});
 it('should call getHelperIndex and return a value', () => {
   let value: string;
   spyOn(service, 'getHelperIndex').and.returnValue(of(value));
