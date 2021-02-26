@@ -54,3 +54,18 @@ beforeEach(async(() => {
   httpTestingController = TestBed.inject(HttpTestingController);
 }));
 ```
+
+## NullInject Error - No Provider for DatePipe
+
+Solution:
+**spec.ts**
+
+https://stackoverflow.com/a/58540766
+
+## NullInjectorError: No provider for ActivatedRoute!
+
+Solution:
+
+**spec.ts**
+
+https://stackoverflow.com/a/53654373
