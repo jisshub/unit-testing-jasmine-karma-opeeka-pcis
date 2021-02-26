@@ -208,3 +208,5 @@ it('imgUrl should be defined when calling setImage', () => {
 ```
 
 ---
+
+<!-- test message -->
