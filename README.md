@@ -182,3 +182,29 @@ it('modal service is called', () => {
 ```
 
 `
+
+## Test a property defined on if-else condition
+
+**component.ts**
+
+```ts
+ setImage() {
+    if (this.previewURL) {
+      this.imgURL = this.previewURL;
+    } else {
+      this.imgURL = this.responseURL;
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('imgUrl should be defined when calling setImage', () => {
+  component.setImage();
+  expect(component.imgURL).toEqual(component.previewURL);
+  expect(component.imgURL).toEqual(component.responseURL);
+});
+```
+
+---
