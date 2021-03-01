@@ -66,6 +66,22 @@ https://stackoverflow.com/a/58540766
 
 Solution:
 
-**spec.ts**
-
 https://stackoverflow.com/a/53654373
+
+## NullInjectorError : No provider for FormBuilder
+
+Solution:
+
+https://stackoverflow.com/a/40250319
+
+## unit-testing-for-angular-for-private-methods-with-jasmine
+
+Solution:
+
+https://stackoverflow.com/a/35991491
+
+or just add below comment
+
+```ts
+// @ts-ignore
+```
