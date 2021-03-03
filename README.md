@@ -139,6 +139,33 @@ it('should call getHelperIndex and return a value', () => {
 });
 ```
 
+## Test subscribe method on ngOnInit
+
+**component.ts**
+
+```ts
+this.sessionService.listenPopup().subscribe((item) => {
+  this.openModal();
+});
+```
+
+**spec.ts**
+
+```ts
+beforeEach(async(() => {
+  service = TestBed.inject(SessionService);
+}));
+
+it('should call listenPopup and return a value', () => {
+  let value: any;
+  spyOn(service, 'listenPopup').and.returnValue(of(value));
+  spyOn(component, 'openModal');
+  component.ngOnInit();
+  fixture.detectChanges();
+  expect(component.openModal).toHaveBeenCalled();
+});
+```
+
 ## Test unsubscribe method on ngOnDestroy
 
 **component.ts**
@@ -208,4 +235,3 @@ it('imgUrl should be defined when calling setImage', () => {
 ```
 
 ---
-

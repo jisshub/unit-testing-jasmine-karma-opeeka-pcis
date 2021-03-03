@@ -85,3 +85,24 @@ or just add below comment
 ```ts
 // @ts-ignore
 ```
+
+## NullInjectorError : No provider for OAuthModule
+
+Solution:
+
+**spec.ts**
+
+```ts
+imports: [OAuthModule.forRoot()];
+```
+
+## NullInjectorError : No provider for Router
+
+Solution:
+
+**spec.ts**
+
+```ts
+imports: [RouterModule.forRoot([])
+```
+
