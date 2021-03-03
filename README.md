@@ -234,4 +234,31 @@ it('imgUrl should be defined when calling setImage', () => {
 });
 ```
 
+## Jasmine - using forEach to test that key/value pairs in array of objects are defined
+
+Solution:
+
+https://stackoverflow.com/questions/49758838/jasmine-using-foreach-to-test-that-key-value-pairs-in-array-of-objects-are-def/49759509
+
+**component.ts**
+
+```ts
+ collapsePresentTable() {
+    this.resolvedNotificationList.forEach((row: any) => {
+      row.isExpanded = false;
+    });
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should set to false on collapsePresentTable', () => {
+  component.resolvedNotificationList.forEach((row: any) => {
+    row.isExpanded = false;
+    expect(row.isExpanded).toBeFalsy();
+  });
+});
+```
+
 ---
