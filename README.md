@@ -261,4 +261,91 @@ it('should set to false on collapsePresentTable', () => {
 });
 ```
 
+## test case for switch statements
+
+**component.ts**
+
+```ts
+getNoteType(note) {
+    switch (note?.noteType) {
+      case 'AddedNotes':
+        return 'Added Note: ';
+        break;
+      case 'ReasonNotes':
+        return 'Reason Note: ';
+        break;
+      case 'ReturnedNotes':
+        return 'Returned Note: ';
+        break;
+      case 'ApprovedNotes':
+        return 'Approved Note: ';
+        break;
+      default:
+        return 'Note: ';
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should return Added Note: from getNoteType ', () => {
+  const note = {
+    noteType: 'AddedNotes',
+  };
+  const Note = component.getNoteType(note);
+  expect(Note).toBe('Added Note: ');
+});
+it('should return Reason Note: from getNoteType ', () => {
+  const note = {
+    noteType: 'ReasonNotes',
+  };
+  const Note = component.getNoteType(note);
+  expect(Note).toBe('Reason Note: ');
+});
+it('should return Returned Note: from getNoteType ', () => {
+  const note = {
+    noteType: 'ReturnedNotes',
+  };
+  const Note = component.getNoteType(note);
+  expect(Note).toBe('Returned Note: ');
+});
+it('should return Approved Note: from getNoteType ', () => {
+  const note = {
+    noteType: 'ApprovedNotes',
+  };
+  const Note = component.getNoteType(note);
+  expect(Note).toBe('Approved Note: ');
+});
+it('should return Note:  from getNoteType ', () => {
+  const note = {};
+  const Note = component.getNoteType(note);
+  expect(Note).toBe('Note: ');
+});
+```
+
 ---
+
+## testing whether data are equal
+
+**component.ts**
+
+```ts
+this.statusValues = [
+  { Id: 0, value: 'Unresolved' },
+  { Id: 1, value: 'Resolved' },
+];
+```
+
+**spec.ts**
+
+```ts
+it('dataCurrentNotificationList and statusValues should be set on ngOnInit', () => {
+  const testStatus = [
+    { Id: 0, value: 'Unresolved' },
+    { Id: 1, value: 'Resolved' },
+  ];
+  expect(component.statusValues).toEqual(testStatus);
+});
+```
+
