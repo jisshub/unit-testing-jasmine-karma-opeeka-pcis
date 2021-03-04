@@ -349,3 +349,20 @@ it('dataCurrentNotificationList and statusValues should be set on ngOnInit', () 
 });
 ```
 
+## test case for get accessor which is not callable
+
+**component.ts**
+
+```ts
+  get noteText() {
+    return this.addpresentnoteform.get('noteText');
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should get present notification note text', () => {
+  expect(component.noteText).toBe(component.addpresentnoteform.get('noteText'));
+});
+```
