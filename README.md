@@ -366,3 +366,55 @@ it('should get present notification note text', () => {
   expect(component.noteText).toBe(component.addpresentnoteform.get('noteText'));
 });
 ```
+
+## Test case for subscription, checking new Date.
+
+**component.ts**
+
+```ts
+  getPersonNeeds() {
+    this.reportFilterSubscription = this.reportService.getReportFilterInput().subscribe((data) => {
+      this.personNeedsReportRequestData = data;
+      if (data && data.VoiceTypeID !== 0 && data.personQuestionnaireID !== 0) {
+        this.getPersonNeedsReports(this.personNeedsReportRequestData);
+      } else {
+        this.isDataLoaded = false;
+      }
+    });
+    this.currentDate = new Date();
+  }
+```
+
+**spec.ts**
+
+```ts
+it('getPersonNeeds should work', () => {
+  let value: string;
+  const today = new Date();
+  spyOn(service, 'getReportFilterInput').and.returnValue(of(value));
+  component.getPersonNeeds();
+  fixture.detectChanges();
+  jasmine.clock().mockDate(today);
+  expect(component.reportFilterSubscription).toBeDefined();
+  expect(component.isDataLoaded).toBeFalse();
+  expect(component.currentDate).toEqual(today);
+});
+```
+
+## Test case to check whether a property is new Date. checking dates.
+
+**component.ts**
+
+```ts
+this.currentDate = new Date();
+```
+
+**spec.ts**
+
+```ts
+it('', () => {
+  const today = new Date();
+  jasmine.clock().mockDate(today);
+  expect(component.currentDate).toEqual(today);
+});
+```
