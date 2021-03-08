@@ -367,11 +367,20 @@ it('should get present notification note text', () => {
 });
 ```
 
+<<<<<<< HEAD
+
 ## Test case for subscription, checking new Date.
+
+=======
+
+## Test case for a simpler form
+
+> > > > > > > 006d45dc09b4caad2d428762ea24aafcdc25aa65
 
 **component.ts**
 
 ```ts
+<<<<<<< HEAD
   getPersonNeeds() {
     this.reportFilterSubscription = this.reportService.getReportFilterInput().subscribe((data) => {
       this.personNeedsReportRequestData = data;
@@ -382,26 +391,153 @@ it('should get present notification note text', () => {
       }
     });
     this.currentDate = new Date();
+=======
+  initNotificationStatus() {
+    this.changeStatusform = this.formBuilder.group({
+      status: new FormControl('', [Validators.required]),
+      checkedStatus: new FormControl('', []),
+    });
+>>>>>>> 006d45dc09b4caad2d428762ea24aafcdc25aa65
   }
 ```
 
 **spec.ts**
 
 ```ts
-it('getPersonNeeds should work', () => {
-  let value: string;
-  const today = new Date();
-  spyOn(service, 'getReportFilterInput').and.returnValue(of(value));
-  component.getPersonNeeds();
-  fixture.detectChanges();
-  jasmine.clock().mockDate(today);
-  expect(component.reportFilterSubscription).toBeDefined();
-  expect(component.isDataLoaded).toBeFalse();
-  expect(component.currentDate).toEqual(today);
+it('form invalid when empty', () => {
+  component.initNotificationStatus();
+  expect(component.changeStatusform.valid).toBeFalsy();
+});
+it('status field should be invalid initially', () => {
+  let status = component.changeStatusform.controls['status'];
+  component.initNotificationStatus();
+  expect(status.valid).toBeFalsy();
+});
+it('required validator should fail when status field is not set', () => {
+  let errors = {};
+  let status = component.changeStatusform.controls['status'];
+  errors = status.errors || {};
+  component.initNotificationStatus();
+  expect(errors['required']).toBeTruthy();
+});
+it('required validator should not fail when status field is set', () => {
+  let errors = {};
+  let status = component.changeStatusform.controls['status'];
+  status.setValue('test');
+  errors = status.errors || {};
+  component.initNotificationStatus();
+  expect(errors['required']).toBeFalsy();
+});
+it('should create a FormGroup comprised of FormControls', () => {
+  component.initNotificationStatus();
+  expect(component.changeStatusform instanceof FormGroup).toBe(true);
 });
 ```
 
-## Test case to check whether a property is new Date. checking dates.
+## Testing ifelse condition of a function accepting a parameter
+
+**components.ts**
+
+```ts
+ showPresent(event: MatCheckboxChange): void {
+    if (event.checked === true) {
+      this.isCheckedStatusPresent = true;
+    } else {
+      this.isCheckedStatusPresent = false;
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should set isCheckedStatusPresent to true if condition is true', () => {
+  const test = new MatCheckboxChange();
+  test.checked = true;
+  component.showPresent(test);
+  expect(component.isCheckedStatusPresent).toBeTrue();
+});
+it('should set isCheckedStatusPresent to false if condition is false', () => {
+  const test = new MatCheckboxChange();
+  test.checked = false;
+  component.showPresent(test);
+  expect(component.isCheckedStatusPresent).toBeFalse();
+});
+```
+
+## Test case for forEach function
+
+**component.ts**
+
+```ts
+this.currentDate = new Date();
+  collapseTable() {
+    this.presentNotifications.forEach((row: any) => {
+      row.isExpanded = false;
+    });
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should call forEach on presentNotification when collapseTable', () => {
+  spyOn(component.presentNotifications, 'forEach');
+  component.collapseTable();
+  expect(component.presentNotifications.forEach).toHaveBeenCalled();
+});
+```
+
+## testing a function with if condition and invoking another method having multiple parameters
+
+**component.ts**
+
+```ts
+ isClickedrowPresent(id, Element) {
+    if (id >= 3) {
+      const newStatusSectionId = 'statusPresent-' + id;
+      this.setFocusRow(newStatusSectionId, Element);
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('setFocusRow should be called when isClickedrowPresent', () => {
+  spyOn(component, 'setFocusRow');
+  const id = 4;
+  const test = 'statusPresent-' + id;
+  component.isClickedrowPresent(id, 'test');
+  expect(component.setFocusRow).toHaveBeenCalledWith(test, 'test');
+});
+```
+
+## Test case involving if condition
+
+**component.ts**
+
+```ts
+ selectStatus(status) {
+    this.disableStatus = false;
+    if (status.value === 'Unresolved') {
+      this.disableStatus = true;
+    }
+  }
+```
+
+**spec.ts**
+
+```ts
+it('disableStatus should set to true if status is Unresolved', () => {
+  const status = { value: 'Unresolved' };
+  status.value = 'Unresolved';
+  component.selectStatus(status);
+  expect(component.disableStatus).toBeTrue();
+});
+```
+
+## test case for new Date()
 
 **component.ts**
 
@@ -416,5 +552,4 @@ it('', () => {
   const today = new Date();
   jasmine.clock().mockDate(today);
   expect(component.currentDate).toEqual(today);
-});
 ```
