@@ -548,8 +548,24 @@ this.currentDate = new Date();
 **spec.ts**
 
 ```ts
-it('', () => {
-  const today = new Date();
-  jasmine.clock().mockDate(today);
+ beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ PersonNeedReportComponent ],
+      providers: [
+        {
+          provide: ReportService,
+          useClass: MockReportService
+        }, FamilyReportComponent
+      ]
+      })
+    .compileComponents();
+    today = new Date();
+    jasmine.clock().mockDate(today);
+    mockreportService = new MockReportService();
+    service = TestBed.inject(ReportService);
+  }));
+
+it('check current date', () => {
   expect(component.currentDate).toEqual(today);
+  
 ```
