@@ -367,20 +367,12 @@ it('should get present notification note text', () => {
 });
 ```
 
-<<<<<<< HEAD
-
-## Test case for subscription, checking new Date.
-
-=======
-
 ## Test case for a simpler form
-
-> > > > > > > 006d45dc09b4caad2d428762ea24aafcdc25aa65
 
 **component.ts**
 
 ```ts
-<<<<<<< HEAD
+
   getPersonNeeds() {
     this.reportFilterSubscription = this.reportService.getReportFilterInput().subscribe((data) => {
       this.personNeedsReportRequestData = data;
@@ -391,13 +383,13 @@ it('should get present notification note text', () => {
       }
     });
     this.currentDate = new Date();
-=======
+
   initNotificationStatus() {
     this.changeStatusform = this.formBuilder.group({
       status: new FormControl('', [Validators.required]),
       checkedStatus: new FormControl('', []),
     });
->>>>>>> 006d45dc09b4caad2d428762ea24aafcdc25aa65
+s
   }
 ```
 
@@ -567,5 +559,37 @@ this.currentDate = new Date();
 
 it('check current date', () => {
   expect(component.currentDate).toEqual(today);
-  
+
 ```
+
+**component.ts**
+
+```ts
+ ngOnInit() {
+    this.qiService.itemTypeCast.subscribe((value: any) => {
+      if (value) {
+        this.assesmentsArray = value;
+        this.generateAssesmentData();
+      }
+    });
+  }
+```
+
+**spec.ts**
+
+```ts
+it('should subscribe to a value on ngOnInit', () => {
+  let value: any;
+  spyOn(component, 'generateAssesmentData');
+  spyOn(service.itemTypeCast, 'subscribe').and.callFake(() => {
+    return value;
+  });
+  component.ngOnInit();
+  fixture.detectChanges();
+  expect(component.assesmentsArray).toBeDefined();
+  expect(component.generateAssesmentData).toHaveBeenCalled();
+});
+```
+
+**Error**: Expected spy _generateAssesmentData_ to have been called.
+
