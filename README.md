@@ -593,3 +593,67 @@ it('should subscribe to a value on ngOnInit', () => {
 
 **Error**: Expected spy _generateAssesmentData_ to have been called.
 
+## PERSON NEEDS REPORT COMPONENT
+
+**component.ts**
+
+```ts
+ getPersonNeeds() {
+    this.reportFilterSubscription = this.reportService.getReportFilterInput().subscribe((data) => {
+      this.personNeedsReportRequestData = data;
+      if (data && data.VoiceTypeID !== 0 && data.personQuestionnaireID !== 0) {
+        this.getPersonNeedsReports(this.personNeedsReportRequestData);
+      } else {
+        this.isDataLoaded = false;
+      }
+    });
+    this.currentDate = new Date();
+  }
+```
+
+**spec.ts**
+
+```ts
+it('getPersonNeeds should work', () => {
+  // tslint:disable-next-line: prefer-const
+  let value: string;
+  spyOn(service, 'getReportFilterInput').and.returnValue(of(value));
+  component.getPersonNeeds();
+  fixture.detectChanges();
+  expect(component.reportFilterSubscription).toBeDefined();
+  expect(component.isDataLoaded).toBeFalse();
+  expect(component.currentDate).toEqual(today);
+});
+```
+
+## NullInjectorError: httpHelperService error solution
+
+**spec.ts**
+
+```ts
+class MockReportService {
+  res = 'Hello World';
+  name = 'Abc';
+  test = 'test';
+
+  getReportFilterInput() {
+    return of(this.res);
+  }
+  getFamilyReportVisibiltyData() {
+    return of(this.name);
+  }
+  GetPersonNeedsReportData() {
+    return of(this.test);
+  }
+}
+
+  let mockreportService: MockReportService;
+
+providers: [
+        {
+          provide: ReportService,
+          useClass: MockReportService
+        }
+
+mockreportService = new MockReportService();
+```
