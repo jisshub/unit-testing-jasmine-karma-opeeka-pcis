@@ -657,3 +657,30 @@ providers: [
 
 mockreportService = new MockReportService();
 ```
+
+## testing response statuscode service
+
+**component.ts**
+
+```ts
+pdfConverter(data, supportDetails) {
+  this.reportService.convertToPDF(data).subscribe(response => {
+    if (response.StatusCode === 200) {
+      this.downloadPdf(response.Data.pdfByteArray, supportDetails);
+      }
+  });
+}
+```
+
+**spec.ts**
+
+```ts
+  it('should get OK status when subscribe to data', () => {
+    spyOn(service, 'convertToPDF').and.callThrough();
+    component.pdfConverter('test');
+    // tslint:disable-next-line: deprecation
+    mockreportService.convertToPDF().subscribe((response) => {
+      expect(response).toBe(200);
+    });
+  });
+```
